@@ -10,7 +10,7 @@ public class CodingNomadConfiguration {
 
     @Bean
     public Framework framework() {
-        return Framework.builder().name("Spring Boot").version("2.5").build();
+        return Framework.builder().name("Spring Boot").version("2.6.2").build();
     }
 
     @Bean
@@ -20,16 +20,24 @@ public class CodingNomadConfiguration {
 
     @Bean
     public JDK jdk() {
-        return JDK.builder().name("OpenJDK").version("11").build();
+        return JDK.builder().name("Corretto").version("11.0.12").build();
     }
 
     @Bean
     public OperatingSystem operatingSystem() {
-        return OperatingSystem.builder().name("macOS").version("11.4").build();
+        return OperatingSystem.builder().name("Windows").version("11").build();
     }
 
     @Bean
     public SoundSystem soundSystem() {
-        return SoundSystem.builder().type("Speakers").brand("Bose").build();
+        return SoundSystem.builder().type("Headphones").brand("Bose").build();
+    }
+    @Bean
+    public Monitor monitor() {
+        return Monitor.builder().manufacturer("MSI").model("Optix MAG321 CQR").build();
+    }
+    @Bean
+    public PC pc() {
+        return PC.builder().manufacturer("Microsoft").model("Surface Pro 6").build();
     }
 }

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 import java.text.MessageFormat;
 
-//@Component
+@Component
 @RequiredArgsConstructor
 public class CodingNomad {
     // automatically injected due to being private final
@@ -18,22 +18,30 @@ public class CodingNomad {
 
     // notice the SoundSystem is not private final - we'll need setter or field injection on this
     private SoundSystem soundSystem;
+    private Monitor monitor;
 
     // setter injection of the SoundSystem
     @Autowired
     public void setSoundSystem(SoundSystem soundSystem) {
         this.soundSystem = soundSystem;
     }
+    @Autowired  // setter injection of the Monitor
+    public void setDisplayMonitor(Monitor monitor) {
+        this.monitor = monitor;
+    }
 
     // field injection of the Operating System
     @Autowired
     OperatingSystem operatingSystem;
 
+    @Autowired    // field injection of pc
+    PC pc;
+
     public String createAwesomeSoftware() {
         return MessageFormat
                 .format("This coding nomad is creating awesome software using, " +
                                 "IDE: ({0}:{1}), JDK: ({2}:{3}), Framework: ({4}:{5}), " +
-                                "OS: ({6}:{7}), Sound System: ({8}:{9})",
+                                "OS: ({6}:{7}), Sound System: ({8}:{9}), " + "PC: ({10}:{11}), Monitor: ({12}:{13})" ,
                         ide.getName(),
                         ide.getVersion(),
                         jdk.getName(),
@@ -43,7 +51,11 @@ public class CodingNomad {
                         operatingSystem.getName(),
                         operatingSystem.getVersion(),
                         soundSystem.getBrand(),
-                        soundSystem.getType()
+                        soundSystem.getType(),
+                        pc.getManufacturer(),
+                        pc.getModel(),
+                        monitor.getManufacturer(),
+                        monitor.getModel()
                 );
     }
 }
