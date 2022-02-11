@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="
@@ -11,7 +12,7 @@
     </bean>
 
     <bean id="walleye" class="platform.codingnomads.co.corespring.lab.Fish">
-        <property name="species" value="Walleye"/>
-        <property name="size" value="29 inch"/>
+        <property name="species" value= "Walleye"/>
+        <property name="size" value= "29 inch"/>
     </bean>
 </beans>
