@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface ParkZoneRepository extends JpaRepository<ParkZone, Long> {
 
-    List<ParkZone> findByAreaList_summerTrue();
+    List<ParkZone> findDistinctByAreaList_summerTrue();
 
     List<ParkZone> findByAreaList_winterTrue();
 

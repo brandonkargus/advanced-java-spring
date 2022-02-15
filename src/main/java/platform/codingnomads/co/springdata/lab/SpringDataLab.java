@@ -51,26 +51,26 @@ public class SpringDataLab implements CommandLineRunner {
         if (trailRepository.findAll().isEmpty()) {
             Area areaG = areaRepository.findByCode("G");
             Area areaH = areaRepository.findByCode("H");
-            Trail route = new Trail(areaG, areaH);
-            trailRepository.save(route);
+            Trail trail = new Trail(areaG, areaH);
+            trailRepository.save(trail);
 
 
             Area areaY = areaRepository.findByCode("Y");
             Area areaZ = areaRepository.findByCode("Z");
-            Trail route2 = new Trail(areaY, areaZ);
-            trailRepository.save(route2);
+            Trail trail2 = new Trail(areaY, areaZ);
+            trailRepository.save(trail2);
 
 
-            //"summer" routes are A-B and C-D
+            //"summer" trails are A-B and C-D
             Area areaA = areaRepository.findByCode("A");
             Area areaB = areaRepository.findByCode("B");
-            Trail route5 = new Trail(areaA, areaB);
-            trailRepository.save(route5);
+            Trail trail3 = new Trail(areaA, areaB);
+            trailRepository.save(trail3);
 
             Area areaC = areaRepository.findByCode("C");
             Area areaD = areaRepository.findByCode("D");
-            Trail route6 = new Trail(areaC, areaD);
-            trailRepository.save(route6);
+            Trail trail4 = new Trail(areaC, areaD);
+            trailRepository.save(trail4);
 
             System.out.println(trailRepository.findByOrigin_code("G"));
             System.out.println(trailRepository.findByDestination_code("Z"));
@@ -84,50 +84,45 @@ public class SpringDataLab implements CommandLineRunner {
             Area areaA = areaRepository.findByCode("A");
             Area areaB = areaRepository.findByCode("B");
             northZone.setAreaList(List.of(areaA, areaB));
-            Trail route5 = trailRepository.findByCode("A-B");
-            northZone.setTrailList(List.of(route5));
+            Trail trail = trailRepository.findByCode("A-B");
+            northZone.setTrailList(List.of(trail));
             parkZoneRepository.save(northZone);
 
             ParkZone eastZone = new ParkZone("East Zone");
             Area areaC = areaRepository.findByCode("C");
             Area areaD = areaRepository.findByCode("D");
             northZone.setAreaList(List.of(areaC, areaD));
-            Trail route6 = trailRepository.findByCode("C-D");
+            Trail trail2 = trailRepository.findByCode("C-D");
             eastZone.setAreaList(List.of(areaC, areaD));      //north and east are summer
-            eastZone.setTrailList(List.of(route6));
+            eastZone.setTrailList(List.of(trail2));
             parkZoneRepository.save(eastZone);
 
             ParkZone southZone = new ParkZone("South Zone");
             Area areaG = areaRepository.findByCode("G");
             Area areaH = areaRepository.findByCode("H");
             northZone.setAreaList(List.of(areaG, areaH));
-            Trail route = trailRepository.findByCode("G-H");                   //south and west are winter
+            Trail trail3 = trailRepository.findByCode("G-H");                   //south and west are winter
             southZone.setAreaList(List.of(areaG, areaH));
-            southZone.setTrailList(List.of(route));
+            southZone.setTrailList(List.of(trail3));
             parkZoneRepository.save(southZone);
 
             ParkZone westZone = new ParkZone("West Zone");
             Area areaY = areaRepository.findByCode("Y");
             Area areaZ = areaRepository.findByCode("Z");
             northZone.setAreaList(List.of(areaA, areaB));
-            Trail route2 = trailRepository.findByCode("Y-Z");
+            Trail trail4 = trailRepository.findByCode("Y-Z");
             westZone.setAreaList(List.of(areaY, areaZ));
-            westZone.setTrailList(List.of(route2));
+            westZone.setTrailList(List.of(trail4));
             parkZoneRepository.save(westZone);
 
         }
 
-        List<ParkZone> openInSummer = parkZoneRepository.findByAreaList_summerTrue();
+        List<ParkZone> openInSummer = parkZoneRepository.findDistinctByAreaList_summerTrue();
         List<ParkZone> openInWinter = parkZoneRepository.findByAreaList_winterTrue();
 
-        List<ParkZone> uniqueSummer = new ArrayList<>();
+
         List<ParkZone> uniqueWinter = new ArrayList<>();
 
-        for (ParkZone parkZone : openInSummer) {
-            if (!uniqueSummer.contains(parkZone)) {
-                uniqueSummer.add(parkZone);
-            }
-        }
 
         for (ParkZone parkZone : openInWinter) {
             if (!uniqueWinter.contains(parkZone)) {
@@ -135,12 +130,13 @@ public class SpringDataLab implements CommandLineRunner {
             }
         }
 
-        System.out.println("Park zones open in summer are:");
-        System.out.println(uniqueSummer);
+        System.out.println("Park zones open in summer are:");  // 2 examples of sorting results, one using "distinct" query method, the other using standard list sorting in Java
+        System.out.println(openInSummer);
+
+
         System.out.println("---------------");
         System.out.println("Park zones open in winter are:");
         System.out.println(uniqueWinter);
-
     }
 
 }
